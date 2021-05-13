@@ -11,6 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataProvider.Config;
+using DataProvider.Entities;
+using DataProvider.Repositories;
 
 namespace Data_Service
 {
@@ -26,6 +29,14 @@ namespace Data_Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var config = new DataProviderConfig();
+            Configuration.Bind(config);
+
+            var trafficTrackerContext = new TrafficTrackerContext(config.MongoDB);
+
+            var trafficTrackerRepo = new TrackRepository(trafficTrackerContext);
+
+            services.AddSingleton<ITrackRepository>(trafficTrackerRepo);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -33,7 +44,7 @@ namespace Data_Service
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Data_Service", Version = "v1" });
             });
         }
-HomeController.cs
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
