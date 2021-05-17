@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using DataProvider.Config;
 using DataProvider.Entities;
 using DataProvider.Repositories;
+using Microsoft.Extensions.Options;
 
 namespace Data_Service
 {
@@ -29,16 +30,26 @@ namespace Data_Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var config = new DataProviderConfig();
-            Configuration.Bind(config);
-
-            var trafficTrackerContext = new TrafficTrackerContext(config.MongoDB);
-
-            var trafficTrackerRepo = new TrackRepository(trafficTrackerContext);
-
-            services.AddSingleton<ITrackRepository>(trafficTrackerRepo);
+            //var config = new DataProviderConfig();
+            //Configuration.Bind(config);
 
             services.AddControllers();
+
+
+            services.Configure<MongoDbSettings>(Configuration.GetSection(nameof(MongoDbSettings)));
+
+            services.AddSingleton<IMongoDbSettings>(sp =>
+                sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
+
+            services.AddSingleton<ITrackRepository, TrackRepository>();
+
+
+            //var trafficTrackerContext = new TrafficTrackerContext(config.MongoDB);
+
+            //var trafficTrackerRepo = new TrackRepository(trafficTrackerContext);
+
+            //services.AddSingleton<ITrackRepository>(trafficTrackerRepo);
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Data_Service", Version = "v1" });
