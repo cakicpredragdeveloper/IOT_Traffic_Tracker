@@ -25,6 +25,13 @@ namespace Sensor_Device_Service.Services
         {
             _logger = logger;
             _started = false;
+
+            object lockObject = new object();
+
+            lock (lockObject)
+            {
+                _ammountOfData = DeviceParameters.AmmountOfData;
+            }
         }
 
         public async Task DoWork(CancellationToken cancellationToken)
@@ -66,22 +73,32 @@ namespace Sensor_Device_Service.Services
                                             else piInstance.SetValue(signal, reader.GetValue(column));
                                         }
                                     }
-                                    currentRow += "\n";
 
+                                    dataFromSensor.Add(signal);
+                                    currentRow += "\n";
                                     _logger.LogInformation(currentRow);
                                     counter++;
 
+                                    if(counter == _ammountOfData)
+                                    {
+                                        counter = 0;
+                                        dataFromSensor.Clear();
+
+                                        // slanje podataka drugom mikroservisu
+
+                                        //uspavljivanje thread-a, za timeLimit
+
+                                        object lockObject = new object();
+
+                                        lock (lockObject)
+                                        {
+                                            _timeLimit = DeviceParameters.TimeLimit;
+                                            _ammountOfData = DeviceParameters.AmmountOfData;
+                                        }
+                                        await Task.Delay(_timeLimit * 1000);
+                                    }
                                 }
                                 else _started = true;
-
-                                object lockObject = new object();
-
-                                lock (lockObject)
-                                {
-                                    _timeLimit = DeviceParameters.TimeLimit;
-                                }
-
-                                await Task.Delay(_timeLimit * 1000);
                             }
 
                         } while (!cancellationToken.IsCancellationRequested && reader.NextResult());
