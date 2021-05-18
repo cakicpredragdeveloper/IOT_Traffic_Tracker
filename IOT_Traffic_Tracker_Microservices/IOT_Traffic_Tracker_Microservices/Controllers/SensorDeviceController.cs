@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Sensor_Device_Service.Services.RepositoryContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Sensor_Device_Service.Helpers;
+
 
 namespace Sensor_Device_Service.Controllers
 {
@@ -12,17 +12,63 @@ namespace Sensor_Device_Service.Controllers
     [Route("sensor-device-service")]
     public class SensorDeviceController : Controller
     {
-        public SensorDeviceController(ISensorRepository sensorRepository)
+        public SensorDeviceController()
         {
-
+            
         }
 
         //TODO: POST ruta za postavljanje time limit-a
 
-        //TODO: GET ruta za citanje time limit-a
+        [HttpPost("time-limit")]
+        public IActionResult SetTimeLimit([FromBody] int newTimeLimit)
+        {
+            object lockObject = new object();
 
-        //TODO: POST ruta za postavljanje ammount of data
+            lock(lockObject)
+            {
+                DeviceParameters.TimeLimit = newTimeLimit;
+            }
 
-        //TODO: GET ruta za citanje ammount of data
+            return Ok("Time limit is set successfully");
+        }
+
+        [HttpGet("time-limit")]
+        public IActionResult GetTimeLimit()
+        {
+            object lockObject = new object();
+            int result;
+            lock (lockObject)
+            {
+                result = DeviceParameters.TimeLimit;
+            }
+
+            return Ok(result);
+        }
+
+        [HttpPost("ammount-of-data")]
+        public IActionResult SetAmmountOfData([FromBody] int newAmmountOfData)
+        {
+            object lockObject = new object();
+
+            lock (lockObject)
+            {
+                DeviceParameters.AmmountOfData = newAmmountOfData;
+            }
+
+            return Ok("Ammount of data is set successfully");
+        }
+
+        [HttpGet("ammount-of-data")]
+        public IActionResult GetAmmountOfData()
+        {
+            object lockObject = new object();
+            int result;
+            lock (lockObject)
+            {
+                result = DeviceParameters.AmmountOfData;
+            }
+
+            return Ok(result);
+        }
     }
 }
