@@ -35,20 +35,12 @@ namespace Data_Service
 
             services.AddControllers();
 
-
             services.Configure<MongoDbSettings>(Configuration.GetSection(nameof(MongoDbSettings)));
 
             services.AddSingleton<IMongoDbSettings>(sp =>
                 sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
 
             services.AddSingleton<ITrackRepository, TrackRepository>();
-
-
-            //var trafficTrackerContext = new TrafficTrackerContext(config.MongoDB);
-
-            //var trafficTrackerRepo = new TrackRepository(trafficTrackerContext);
-
-            //services.AddSingleton<ITrackRepository>(trafficTrackerRepo);
 
             services.AddSwaggerGen(c =>
             {
