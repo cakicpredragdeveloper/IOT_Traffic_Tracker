@@ -9,6 +9,7 @@ using System.IO;
 using ExcelDataReader;
 using Sensor_Device_Service.Models;
 using System.Reflection;
+using System.Net.Http;
 
 namespace Sensor_Device_Service.Services
 {
@@ -93,14 +94,19 @@ namespace Sensor_Device_Service.Services
                                         }
                                         await Task.Delay(_timeLimit * 1000);
 
+                                        SetOfSignals setOfSignals = new SetOfSignals();
+                                        setOfSignals.Tracks.AddRange(dataFromSensor);
+
+
+                                        using var client = new HttpClient();
+                                        var response = await client.GetAsync("http://data_service/data-service/tracks");
+
                                         //slanje podataka drugom mikroservisu
-                                        string result = await _httpService.PostRequest("http://localhost:80/data-service/tracks/array-of-tracks", dataFromSensor);
+                                        string result = await _httpService.PostRequest("http://data_service:5000/data-service/tracks/array-of-tracks", setOfSignals);
                                         _logger.LogInformation(result);
 
                                         counter = 0;
                                         dataFromSensor.Clear();
-
-                                        //uspavljivanje thread-a, za timeLimit
                                     }
                                 }
                                 else _started = true;

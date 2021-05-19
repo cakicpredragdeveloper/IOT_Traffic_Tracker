@@ -8,7 +8,7 @@ namespace Sensor_Device_Service.Models
     public class Signal
     {
         public DateTime Time { get; set; }
-        public int? Segment { get; set; }
+        public int? SegmentId { get; set; }
         public int? Speed { get; set; }
         public string Street { get; set; }
         public string Direction { get; set; }

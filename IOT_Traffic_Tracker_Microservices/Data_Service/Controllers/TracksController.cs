@@ -65,9 +65,9 @@ namespace Data_Service.Controllers
         }
 
         [HttpPost("array-of-tracks")]
-        public async Task<ActionResult> Post([FromBody] IEnumerable<Track> tracks)
+        public async Task<ActionResult> Post([FromBody] SetOfTracks setOfTracks)
         {
-            foreach(var track in tracks)
+            foreach(var track in setOfTracks.Tracks)
             {
                 track.Id = await _repo.GetNextId();
                 await _repo.Create(track);

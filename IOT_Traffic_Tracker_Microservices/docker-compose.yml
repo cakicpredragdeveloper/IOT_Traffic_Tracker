@@ -27,7 +27,7 @@ services:
             dockerfile: IOT_Traffic_Tracker_Microservices/Dockerfile
 
     data_service:
-        image: ${DOCKER_REGISTRY-}dataservice
+        image: ${DOCKER_REGISTRY-}data_service
         build:
             context: .
             dockerfile: Data_Service/Dockerfile

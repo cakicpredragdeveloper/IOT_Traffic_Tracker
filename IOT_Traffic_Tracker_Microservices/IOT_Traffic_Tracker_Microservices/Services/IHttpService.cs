@@ -8,6 +8,6 @@ namespace Sensor_Device_Service.Services
 {
     public interface IHttpService
     {
-        Task<string> PostRequest(string url, IEnumerable<Signal> dataFromSensor);
+        Task<string> PostRequest(string url, SetOfSignals setOfSignals);
     }
 }

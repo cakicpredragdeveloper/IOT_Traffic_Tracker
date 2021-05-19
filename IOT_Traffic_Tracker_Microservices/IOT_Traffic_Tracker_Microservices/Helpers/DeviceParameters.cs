@@ -13,7 +13,7 @@ namespace Sensor_Device_Service.Helpers
         public static List<string> SignalProperties { get; set; }
             = new List<string>()
             {
-                "Time", "Segment", "Speed", "Street", "Direction", "FromStreet", "ToStreet",
+                "Time", "SegmentId", "Speed", "Street", "Direction", "FromStreet", "ToStreet",
                 "Length", "StreetHeading", "Comments", "BusCount", "MessageCount", "Hour",
                 "DayOfWeek", "Month", "RecordId", "StartLat", "StartLng",
                 "EndLat", "EndLng", "CommunityAreas", "ZipCodes", "Wards"
