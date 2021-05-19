@@ -15,16 +15,19 @@ namespace Sensor_Device_Service.Services
     public class Worker : IWorker
     {
         private readonly ILogger<Worker> _logger;
+        IHttpService _httpService;
         private int _timeLimit;
         private int _ammountOfData;
         private bool _started;
-        private int counter = 0;
+        private int counter;
         private List<Signal> dataFromSensor = new List<Signal>();
 
-        public Worker(ILogger<Worker> logger)
+        public Worker(ILogger<Worker> logger, IHttpService httpService)
         {
             _logger = logger;
+            _httpService = httpService;
             _started = false;
+            counter = 0;
 
             object lockObject = new object();
 
@@ -81,13 +84,6 @@ namespace Sensor_Device_Service.Services
 
                                     if(counter == _ammountOfData)
                                     {
-                                        counter = 0;
-                                        dataFromSensor.Clear();
-
-                                        // slanje podataka drugom mikroservisu
-
-                                        //uspavljivanje thread-a, za timeLimit
-
                                         object lockObject = new object();
 
                                         lock (lockObject)
@@ -96,11 +92,19 @@ namespace Sensor_Device_Service.Services
                                             _ammountOfData = DeviceParameters.AmmountOfData;
                                         }
                                         await Task.Delay(_timeLimit * 1000);
+
+                                        //slanje podataka drugom mikroservisu
+                                        string result = await _httpService.PostRequest("http://localhost:80/data-service/tracks/array-of-tracks", dataFromSensor);
+                                        _logger.LogInformation(result);
+
+                                        counter = 0;
+                                        dataFromSensor.Clear();
+
+                                        //uspavljivanje thread-a, za timeLimit
                                     }
                                 }
                                 else _started = true;
                             }
-
                         } while (!cancellationToken.IsCancellationRequested && reader.NextResult());
                     }
                 }

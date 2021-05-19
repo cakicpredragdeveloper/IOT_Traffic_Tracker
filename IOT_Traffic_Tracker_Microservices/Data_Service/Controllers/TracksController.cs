@@ -63,5 +63,16 @@ namespace Data_Service.Controllers
             await _repo.Delete(id);
             return new OkResult();
         }
+
+        [HttpPost("array-of-tracks")]
+        public async Task<ActionResult> Post([FromBody] IEnumerable<Track> tracks)
+        {
+            foreach(var track in tracks)
+            {
+                track.Id = await _repo.GetNextId();
+                await _repo.Create(track);
+            }
+            return  Ok("Tracks saved successfully!");
+        }
     }
 }

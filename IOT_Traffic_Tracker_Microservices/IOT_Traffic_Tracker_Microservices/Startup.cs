@@ -29,6 +29,7 @@ namespace IOT_Traffic_Tracker_Microservices
         {
             services.AddControllers();
             services.AddSingleton<IWorker, Worker>();
+            services.AddSingleton<IHttpService, HttpService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IOT_Traffic_Tracker_Microservices", Version = "v1" });

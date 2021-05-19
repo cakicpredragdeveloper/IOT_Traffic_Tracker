@@ -23,10 +23,10 @@ namespace Sensor_Device_Service.Models
         public int? DayOfWeek { get; set; }
         public int? Month { get; set; }
         public string RecordId { get; set; }
-        public double? StartLatitude { get; set; }
-        public double? StartLongitude { get; set; }
-        public double? EndLatitude { get; set; }
-        public double? EndLongitude { get; set; }
+        public double? StartLat { get; set; }
+        public double? StartLng { get; set; }
+        public double? EndLat { get; set; }
+        public double? EndLng { get; set; }
         public int? CommunityAreas { get; set; }
         public int? ZipCodes { get; set; }
         public int? Wards { get; set; }

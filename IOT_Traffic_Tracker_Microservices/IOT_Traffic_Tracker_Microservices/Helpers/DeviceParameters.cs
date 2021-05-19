@@ -15,8 +15,8 @@ namespace Sensor_Device_Service.Helpers
             {
                 "Time", "Segment", "Speed", "Street", "Direction", "FromStreet", "ToStreet",
                 "Length", "StreetHeading", "Comments", "BusCount", "MessageCount", "Hour",
-                "DayOfWeek", "Month", "RecordId", "StartLatitude", "StartLongitude",
-                "EndLatitude", "EndLongitude", "CommunityAreas", "ZipCodes", "Wards"
+                "DayOfWeek", "Month", "RecordId", "StartLat", "StartLng",
+                "EndLat", "EndLng", "CommunityAreas", "ZipCodes", "Wards"
             };
     }
 }
