@@ -27,12 +27,13 @@ namespace DataProvider.Entities
         public int? DayOfWeek { get; set; }
         public int? Month { get; set; }
         public string RecordId { get; set; }
-        public string StartLat { get; set; }
-        public string StartLng { get; set; }
-        public string EndLat { get; set; }
-        public string EndLng { get; set; }
+        public double? StartLat { get; set; }
+        public double? StartLng { get; set; }
+        public double? EndLat { get; set; }
+        public double? EndLng { get; set; }
         public int? CommunityAreas { get; set; }
         public int? ZipCodes { get; set; }
         public int? Wards { get; set; }
+        public double? AirDistance { get; set; }
     }
 }

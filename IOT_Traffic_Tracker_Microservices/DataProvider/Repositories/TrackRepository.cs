@@ -69,5 +69,20 @@ namespace DataProvider.Repositories
             return await _tracks.CountDocumentsAsync(new BsonDocument()) + 1;
         }
 
+        public async Task<IEnumerable<Track>> GetTracks(int maxSpeed)
+        {
+            FilterDefinition<Track> filter = Builders<Track>.Filter.Gt(m => m.Speed, maxSpeed);
+
+            return await _tracks.Find(filter)
+                    .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Track>> GetTrascksAirDistanceCondition(int airDistance)
+        {
+            FilterDefinition<Track> filter = Builders<Track>.Filter.Lte(t => t.AirDistance, airDistance);
+
+            return await _tracks.Find(filter)
+                   .ToListAsync();
+        }
     }
 }

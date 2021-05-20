@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Sensor_Device_Service.Models
 {
-    public class SetOfSignals
+    public class SetOfTracks
     {
-        public List<Signal> Tracks { get; set; }
-            = new List<Signal>();
+        public List<Track> Tracks { get; set; }
+            = new List<Track>();
     }
 }

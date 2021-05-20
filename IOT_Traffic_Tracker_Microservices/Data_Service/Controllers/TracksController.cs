@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataProvider.Entities;
 using DataProvider.Repositories;
+using Data_Service.Services;
 
 namespace Data_Service.Controllers
 {
@@ -13,15 +14,19 @@ namespace Data_Service.Controllers
     public class TracksController : Controller
     {
         private readonly ITrackRepository _repo;
-        public TracksController(ITrackRepository repo)
+        private readonly IGeoService _geoService;
+
+        public TracksController(ITrackRepository repo, IGeoService geoService)
         {
             _repo = repo;
+            _geoService = geoService;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Track>>> Get()
         {
-            return new ObjectResult(await _repo.GetAllTracks());
+            var result = await _repo.GetAllTracks();
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
@@ -38,6 +43,7 @@ namespace Data_Service.Controllers
         public async Task<ActionResult<Track>> Post([FromBody] Track track)
         {
             track.Id = await _repo.GetNextId();
+            track.AirDistance = _geoService.AirDistance((double)track.StartLat, (double)track.StartLng, (double)track.EndLat, (double)track.EndLng);
             await _repo.Create(track);
             return new OkObjectResult(track);
         }
@@ -70,9 +76,28 @@ namespace Data_Service.Controllers
             foreach(var track in setOfTracks.Tracks)
             {
                 track.Id = await _repo.GetNextId();
+                track.AirDistance = _geoService.AirDistance((double)track.StartLat, (double)track.StartLng, (double)track.EndLat, (double)track.EndLng);
                 await _repo.Create(track);
             }
             return  Ok("Tracks saved successfully!");
+        }
+
+        [HttpGet("max-speed/{maxSpeed}")]
+        public async Task<ActionResult> GetTracks(int maxSpeed)
+        {
+            var result = await _repo.GetTracks(maxSpeed);
+            if(result == null)
+                return new NotFoundResult();
+            return Ok(result);
+        }
+
+        [HttpGet("air-distance/{airDistance}")]
+        public async Task<ActionResult> GetTracksAirDistanceCondition(int airDistance)
+        {
+            var result = await _repo.GetTrascksAirDistanceCondition(airDistance);
+            if (result == null)
+                return new NotFoundResult();
+            return Ok(result);
         }
     }
 }

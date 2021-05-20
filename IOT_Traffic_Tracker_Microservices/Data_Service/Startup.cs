@@ -15,6 +15,7 @@ using DataProvider.Config;
 using DataProvider.Entities;
 using DataProvider.Repositories;
 using Microsoft.Extensions.Options;
+using Data_Service.Services;
 
 namespace Data_Service
 {
@@ -41,6 +42,7 @@ namespace Data_Service
                 sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
 
             services.AddSingleton<ITrackRepository, TrackRepository>();
+            services.AddSingleton<IGeoService, GeoService>();
 
             services.AddSwaggerGen(c =>
             {

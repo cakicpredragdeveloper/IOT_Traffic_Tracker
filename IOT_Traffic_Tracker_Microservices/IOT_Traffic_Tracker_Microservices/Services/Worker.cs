@@ -21,7 +21,7 @@ namespace Sensor_Device_Service.Services
         private int _ammountOfData;
         private bool _started;
         private int counter;
-        private List<Signal> dataFromSensor = new List<Signal>();
+        private List<Track> dataFromSensor = new List<Track>();
 
         public Worker(ILogger<Worker> logger, IHttpService httpService)
         {
@@ -56,8 +56,8 @@ namespace Sensor_Device_Service.Services
 
                                 if (_started)
                                 {
-                                    Signal signal = new Signal();
-                                    Type signalType = typeof(Signal);
+                                    Track signal = new Track();
+                                    Type signalType = typeof(Track);
                                     string currentRow = "";
 
                                     for (int column = 0; column < reader.FieldCount; column++)
@@ -94,15 +94,11 @@ namespace Sensor_Device_Service.Services
                                         }
                                         await Task.Delay(_timeLimit * 1000);
 
-                                        SetOfSignals setOfSignals = new SetOfSignals();
+                                        SetOfTracks setOfSignals = new SetOfTracks();
                                         setOfSignals.Tracks.AddRange(dataFromSensor);
 
-
-                                        using var client = new HttpClient();
-                                        var response = await client.GetAsync("http://data_service/data-service/tracks");
-
                                         //slanje podataka drugom mikroservisu
-                                        string result = await _httpService.PostRequest("http://data_service:5000/data-service/tracks/array-of-tracks", setOfSignals);
+                                        string result = await _httpService.PostRequest("http://data_service/data-service/tracks/array-of-tracks", setOfSignals);
                                         _logger.LogInformation(result);
 
                                         counter = 0;

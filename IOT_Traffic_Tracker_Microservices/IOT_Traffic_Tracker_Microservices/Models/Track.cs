@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Sensor_Device_Service.Models
 {
-    public class Signal
+    public class Track
     {
         public DateTime Time { get; set; }
         public int? SegmentId { get; set; }
