@@ -38,3 +38,17 @@ services:
         ports:
             - 5000:80
 
+
+    commandservice:
+        image: ${DOCKER_REGISTRY-}commandservice
+        build:
+            context: .
+            dockerfile: CommandService\Dockerfile
+
+
+    analyticsservice:
+        image: ${DOCKER_REGISTRY-}analyticsservice
+        build:
+          context: .
+          dockerfile: AnalyticsService\Dockerfile
+
