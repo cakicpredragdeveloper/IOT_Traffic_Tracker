@@ -11,6 +11,8 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["AnalyticsService/AnalyticsService.csproj", "AnalyticsService/"]
+COPY ["RabbitMQProvider/RabbitMQProvider.csproj", "RabbitMQProvider/"]
+COPY ["DataProvider/DataProvider.csproj", "DataProvider/"]
 RUN dotnet restore "AnalyticsService/AnalyticsService.csproj"
 COPY . .
 WORKDIR "/src/AnalyticsService"

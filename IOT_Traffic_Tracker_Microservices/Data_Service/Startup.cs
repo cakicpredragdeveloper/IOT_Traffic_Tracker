@@ -1,21 +1,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using DataProvider.Config;
-using DataProvider.Entities;
 using DataProvider.Repositories;
 using Microsoft.Extensions.Options;
 using Data_Service.Services;
+using RabbitMQProvider.Config;
+using RabbitMQProvider.Send;
 
 namespace Data_Service
 {
@@ -31,9 +25,7 @@ namespace Data_Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //var config = new DataProviderConfig();
-            //Configuration.Bind(config);
-
+            
             services.AddControllers();
 
             services.Configure<MongoDbSettings>(Configuration.GetSection(nameof(MongoDbSettings)));
@@ -43,6 +35,14 @@ namespace Data_Service
 
             services.AddSingleton<ITrackRepository, TrackRepository>();
             services.AddSingleton<IGeoService, GeoService>();
+
+            services.Configure<RabbitMQConfiguration>(Configuration.GetSection(nameof(RabbitMQConfiguration)));
+            services.AddSingleton<IRabbitMQConfiguration>(sp =>
+                sp.GetRequiredService<IOptions<RabbitMQConfiguration>>().Value);
+
+
+            services.AddSingleton<ITrackSender, TrackSender>();
+
 
             services.AddSwaggerGen(c =>
             {
