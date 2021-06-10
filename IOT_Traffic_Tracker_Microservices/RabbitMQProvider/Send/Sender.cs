@@ -29,19 +29,6 @@ namespace RabbitMQProvider.Send
 
         public void Send(object obj)
         {
-            //if (ConnectionExists())
-            //{
-            //    using (var channel = _connection.CreateModel())
-            //    {
-            //        channel.QueueDeclare(queue: _queueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
-
-            //        var json = JsonConvert.SerializeObject(track);
-            //        var body = Encoding.UTF8.GetBytes(json);
-
-            //        channel.BasicPublish(exchange: "", routingKey: _queueName, basicProperties: null, body: body);
-            //    }
-            //}
-
             if (!ChannelExists())
             {
                 CreateChannel();
@@ -49,10 +36,6 @@ namespace RabbitMQProvider.Send
 
             var json = JsonConvert.SerializeObject(obj);
             var body = Encoding.UTF8.GetBytes(json);
-
-
-            //var json = JsonConvert.SerializeObject(setOfSignals);
-            //var body = new StringContent(json, Encoding.UTF8, "application/json");
 
             _channel.BasicPublish(exchange: "", routingKey: _queueName, basicProperties: null, body: body);
         }
