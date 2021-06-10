@@ -12,24 +12,22 @@ using RabbitMQProvider.Config;
 
 namespace RabbitMQProvider.Receive
 {
-    public class Receiver: BackgroundService
+    public abstract class Receiver: BackgroundService
     {
         private IModel _channel;
         private IConnection _connection;
-        private readonly IOnMessageReceived _onMessageReceivedService;
+
         private readonly string _hostname;
         private readonly string _queueName;
         private readonly string _username;
         private readonly string _password;
 
-        public Receiver(IRabbitMQConfiguration rabbitMqOptions, string queueName, IOnMessageReceived onMessageReceivedService)
+        public Receiver(IRabbitMQConfiguration rabbitMqOptions, string queueName)
         {
             _queueName = queueName;
             _hostname = rabbitMqOptions.Hostname;
             _username = rabbitMqOptions.UserName;
             _password = rabbitMqOptions.Password;
-
-            _onMessageReceivedService = onMessageReceivedService;
 
             InitializeRabbitMqListener();
         }
@@ -60,8 +58,6 @@ namespace RabbitMQProvider.Receive
 
                 HandleMessage(content);
 
-                //var updateCustomerFullNameModel = JsonConvert.DeserializeObject<UpdateCustomerFullNameModel>(content);
-
                 _channel.BasicAck(ea.DeliveryTag, false);
             };
             consumer.Shutdown += OnConsumerShutdown;
@@ -74,10 +70,7 @@ namespace RabbitMQProvider.Receive
             return Task.CompletedTask;
         }
 
-        private void HandleMessage(string content)
-        {
-            _onMessageReceivedService.Do(content);
-        }
+        protected abstract void HandleMessage(string content);
 
         private void RabbitMQ_ConnectionShutdown(object sender, ShutdownEventArgs e)
         {

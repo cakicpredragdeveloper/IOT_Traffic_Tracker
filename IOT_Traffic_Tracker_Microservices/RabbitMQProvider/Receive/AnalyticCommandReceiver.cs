@@ -10,9 +10,16 @@ namespace RabbitMQProvider.Receive
         private readonly IRabbitMQConfiguration _rabbitMQConfiguration;
 
         public AnalyticCommandReceiver(IRabbitMQConfiguration rabbitConf)
-                : base(rabbitConf, rabbitConf.AnalyticCommandQueueName, new OnAnalyticCommandMessasgeReceived())
+                : base(rabbitConf, rabbitConf.AnalyticCommandQueueName)
         {
             _rabbitMQConfiguration = rabbitConf;
+        }
+
+        protected override void HandleMessage(string content)
+        {
+            throw new NotImplementedException();
+
+            // TODO ovde na osnovu komande saljes REST PUT / POST zahtev sa „komandom“ Device Microservisu
         }
     }
 }

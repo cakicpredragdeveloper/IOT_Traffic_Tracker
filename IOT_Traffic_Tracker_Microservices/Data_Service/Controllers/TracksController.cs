@@ -80,9 +80,9 @@ namespace Data_Service.Controllers
             {
                 track.Id = await _repo.GetNextId();
                 track.AirDistance = _geoService.AirDistance((double)track.StartLat, (double)track.StartLng, (double)track.EndLat, (double)track.EndLng);
+                _trackSender.Send(track);
                 await _repo.Create(track);
 
-                _trackSender.Send(track);
             }
             return  Ok("Tracks saved successfully!");
         }
