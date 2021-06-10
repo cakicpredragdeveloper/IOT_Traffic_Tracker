@@ -8,7 +8,7 @@ namespace RabbitMQProvider.Send
     public class TrackSender : Sender, ITrackSender
     {
         public TrackSender(IRabbitMQConfiguration rabbitMqOptions)
-               :base(rabbitMqOptions)
+               :base(rabbitMqOptions, rabbitMqOptions.TracksQueueName)
         {
         }
     }

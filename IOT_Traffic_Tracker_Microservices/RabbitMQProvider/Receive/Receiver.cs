@@ -16,16 +16,16 @@ namespace RabbitMQProvider.Receive
     {
         private IModel _channel;
         private IConnection _connection;
-        private readonly IOnMessageReceivedService _onMessageReceivedService;
+        private readonly IOnMessageReceived _onMessageReceivedService;
         private readonly string _hostname;
         private readonly string _queueName;
         private readonly string _username;
         private readonly string _password;
 
-        public Receiver(IRabbitMQConfiguration rabbitMqOptions, IOnMessageReceivedService onMessageReceivedService)
+        public Receiver(IRabbitMQConfiguration rabbitMqOptions, string queueName, IOnMessageReceived onMessageReceivedService)
         {
+            _queueName = queueName;
             _hostname = rabbitMqOptions.Hostname;
-            _queueName = rabbitMqOptions.QueueName;
             _username = rabbitMqOptions.UserName;
             _password = rabbitMqOptions.Password;
 

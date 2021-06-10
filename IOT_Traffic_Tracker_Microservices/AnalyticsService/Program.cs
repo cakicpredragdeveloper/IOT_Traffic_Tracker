@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AnalyticsService.Services;
 using Microsoft.Extensions.DependencyInjection;
 using RabbitMQProvider.Receive;
 

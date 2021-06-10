@@ -1,27 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using RabbitMQProvider.Config;
+using RabbitMQProvider.Send;
 using DataProvider.Repositories;
-using DataProvider.Entities;
-using Newtonsoft.Json;
 
 namespace RabbitMQProvider.Receive
 {
-    public class TrackReceiver : IOnMessageReceivedService
+    public class TrackReceiver : Receiver
     {
+        private readonly IRabbitMQConfiguration _rabbitMQConfiguration;
         private readonly ITrackRepository _trackRepository;
+        private readonly IAnalyticCommandSender _analyticCommandSender;
 
-        public TrackReceiver(ITrackRepository trackRepository)
+        public TrackReceiver(IRabbitMQConfiguration rabbitConf, ITrackRepository trackRepository, IAnalyticCommandSender analyticCommandSender)
+                : base(rabbitConf, rabbitConf.TracksQueueName, new OnTrackReceived(trackRepository, analyticCommandSender))
         {
+            _rabbitMQConfiguration = rabbitConf;
             _trackRepository = trackRepository;
-        }
-
-        public void Do(string content)
-        {
-            var track = JsonConvert.DeserializeObject<Track>(content);
-
-            Console.WriteLine(track);
-
+            _analyticCommandSender = analyticCommandSender;
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RabbitMQProvider.Receive
 {
-    public interface IOnMessageReceivedService
+    public interface IOnMessageReceived
     {
         void Do(string obj);
     }

@@ -17,9 +17,9 @@ namespace RabbitMQProvider.Send
         private IConnection _connection;
         private IModel _channel;
 
-        public Sender(IRabbitMQConfiguration rabbitMqOptions)
+        public Sender(IRabbitMQConfiguration rabbitMqOptions, string queueName)
         {
-            _queueName = rabbitMqOptions.QueueName;
+            _queueName = queueName;
             _hostname = rabbitMqOptions.Hostname;
             _username = rabbitMqOptions.UserName;
             _password = rabbitMqOptions.Password;
