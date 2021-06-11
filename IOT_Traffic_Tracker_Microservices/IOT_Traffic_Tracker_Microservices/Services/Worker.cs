@@ -10,6 +10,10 @@ using ExcelDataReader;
 using Sensor_Device_Service.Models;
 using System.Reflection;
 using System.Net.Http;
+using Newtonsoft.Json;
+using System.Text;
+using System.Net;
+using Newtonsoft.Json.Serialization;
 
 namespace Sensor_Device_Service.Services
 {
@@ -98,11 +102,38 @@ namespace Sensor_Device_Service.Services
                                         setOfSignals.Tracks.AddRange(dataFromSensor);
 
                                         //slanje podataka drugom mikroservisu
-                                        string result = await _httpService.PostRequest("http://data_service/data-service/tracks/array-of-tracks", setOfSignals);
-                                        _logger.LogInformation(result);
+                                        //string result = await _httpService.PostRequest("http://data_service/data-service/tracks/array-of-tracks", setOfSignals);
+                                        //_logger.LogInformation(result);
+
+                                        // test slanje siddhi servisu
+                                        AnalizatorInputModel inputTestModel = new AnalizatorInputModel()
+                                        {
+                                            Speed = setOfSignals.Tracks.First().Speed,
+                                            BusCount = setOfSignals.Tracks.First().BusCount,
+                                            RecordId = setOfSignals.Tracks.First().RecordId
+                                        };
+
+                                        DefaultContractResolver contractResolver = new DefaultContractResolver
+                                        {
+                                            NamingStrategy = new CamelCaseNamingStrategy()
+                                        };
+
+                                        //var json = JsonConvert.SerializeObject(inputTestModel);
+
+                                        string json = JsonConvert.SerializeObject(inputTestModel, new JsonSerializerSettings
+                                        {
+                                            ContractResolver = contractResolver,
+                                            Formatting = Formatting.Indented
+                                        });
+
+                                        var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+                                        using var client = new HttpClient();
+                                        var response = await client.PostAsync("http://localhost:8006/track-analizator", data);
+                                        string result = response.Content.ReadAsStringAsync().Result;
 
                                         counter = 0;
-                                        dataFromSensor.Clear();
+                                        dataFromSensor.Clear(); 
                                     }
                                 }
                                 else _started = true;

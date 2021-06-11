@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Sensor_Device_Service.Helpers;
+using Sensor_Device_Service.Models;
 
 
 namespace Sensor_Device_Service.Controllers
@@ -14,7 +15,7 @@ namespace Sensor_Device_Service.Controllers
     {
         public SensorDeviceController()
         {
-            
+
         }
 
         //TODO: POST ruta za postavljanje time limit-a
@@ -24,7 +25,7 @@ namespace Sensor_Device_Service.Controllers
         {
             object lockObject = new object();
 
-            lock(lockObject)
+            lock (lockObject)
             {
                 DeviceParameters.TimeLimit = newTimeLimit;
             }
@@ -69,6 +70,13 @@ namespace Sensor_Device_Service.Controllers
             }
 
             return Ok(result);
+        }
+
+        [HttpPost("analizator-result")]
+        public IActionResult AnalizatorResult([FromBody] AnalizatorResult analizatorResult)
+        {
+            int a = 10;
+            return Ok();
         }
     }
 }
