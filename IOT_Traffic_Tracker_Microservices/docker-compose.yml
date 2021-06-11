@@ -34,7 +34,8 @@ services:
         environment:
           - "MongoDbSettings:ConnectionString=mongodb://root:example@mongo:27017"
         depends_on:
-          - mongo  
+          - mongo
+          - rabbitmq
         ports:
             - 5000:80
 
@@ -44,11 +45,31 @@ services:
         build:
             context: .
             dockerfile: CommandService\Dockerfile
-
+        depends_on:
+          - rabbitmq
+        ports:
+            - 5001:80
 
     analyticsservice:
         image: ${DOCKER_REGISTRY-}analyticsservice
         build:
-          context: .
-          dockerfile: AnalyticsService\Dockerfile
+            context: .
+            dockerfile: AnalyticsService\Dockerfile
+        depends_on:
+          - rabbitmq
+        ports:
+            - 5002:80
+
+    rabbitmq:
+        container_name: rabbitmq
+        ports:
+            - 5672:5672
+            - 15672:15672
+        environment:
+            - RABBITMQ_DEFAULT_USER=user
+            - RABBITMQ_DEFAULT_PASS=password        
+        image: rabbitmq:3-management
+
+
+
 

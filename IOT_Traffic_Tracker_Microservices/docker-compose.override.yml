@@ -17,9 +17,6 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "80"
-      
+
   analyticsservice:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "80"
+

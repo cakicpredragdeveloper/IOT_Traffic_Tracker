@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DataProvider.Entities;
 using DataProvider.Repositories;
 using Data_Service.Services;
+using RabbitMQProvider.Send;
 
 namespace Data_Service.Controllers
 {
@@ -15,11 +16,13 @@ namespace Data_Service.Controllers
     {
         private readonly ITrackRepository _repo;
         private readonly IGeoService _geoService;
+        private readonly ITrackSender _trackSender;
 
-        public TracksController(ITrackRepository repo, IGeoService geoService)
+        public TracksController(ITrackRepository repo, IGeoService geoService, ITrackSender sender)
         {
             _repo = repo;
             _geoService = geoService;
+            _trackSender = sender;
         }
 
         [HttpGet]
@@ -77,7 +80,9 @@ namespace Data_Service.Controllers
             {
                 track.Id = await _repo.GetNextId();
                 track.AirDistance = _geoService.AirDistance((double)track.StartLat, (double)track.StartLng, (double)track.EndLat, (double)track.EndLng);
+                _trackSender.Send(track);
                 await _repo.Create(track);
+
             }
             return  Ok("Tracks saved successfully!");
         }
