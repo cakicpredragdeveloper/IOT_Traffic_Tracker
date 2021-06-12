@@ -1,0 +1,31 @@
+@App:name("TrackAnalizator")
+
+@App:description('Analizing data from AnalizeService')
+
+-- HTTP endpoint which listens for api request related events
+@source(type='http', receiver.url='http://0.0.0.0:8006/track-analizator',
+        basic.auth.enabled='false',
+        @map(type='json',
+        @attributes(speed = "speed", busCount = "busCount", recordId = "recordId")))
+        define stream TrackInputStream 
+            (speed int, busCount int, recordId string);
+        
+--HTTP sink to publish analizing result
+--@sink(type='http', publisher.url='https://localhost:5003/sensor-device-service/analizator-result', 
+    --method='POST', 
+    --headers='Content-type:application/json',
+    --@map(type='json'))
+    --define stream TrackOutputStream(recordId string, status string);
+        
+@sink(type='log', prefix='LOGGER')
+    define stream TrackOutputStream(recordId string, status string);
+      
+--Proccessing data from TrackInputStream
+@info(name = 'ComplexIfElseQuery')
+    from TrackInputStream
+    select recordId, 
+    ifThenElse(speed > 20, 
+        ifThenElse(busCount > 2, 'Danger', 'Warning'), 
+        'Normal')
+    as status
+insert into TrackOutputStream;

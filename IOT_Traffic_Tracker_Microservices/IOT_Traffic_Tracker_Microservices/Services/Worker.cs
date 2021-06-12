@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Net;
 using Newtonsoft.Json.Serialization;
+using System.Net.Http.Headers;
 
 namespace Sensor_Device_Service.Services
 {
@@ -129,7 +130,9 @@ namespace Sensor_Device_Service.Services
                                         var data = new StringContent(json, Encoding.UTF8, "application/json");
 
                                         using var client = new HttpClient();
-                                        var response = await client.PostAsync("http://localhost:8006/track-analizator", data);
+                                        client.DefaultRequestHeaders.Accept.Add(
+                                            new MediaTypeWithQualityHeaderValue("application/json"));
+                                        var response = await client.PostAsync("http://192.168.1.58:8006/track-analizator", data);
                                         string result = response.Content.ReadAsStringAsync().Result;
 
                                         counter = 0;
