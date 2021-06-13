@@ -16,5 +16,7 @@ namespace DataProvider.Repositories
         Task<long> GetNextId();
         Task<IEnumerable<Track>> GetTracks(int maxSpeed);
         Task<IEnumerable<Track>> GetTrascksAirDistanceCondition(int airDistance);
+        Task Create(AnaliticsResult analizatorResult);
+        Task<long> GetNextAnaliticsResultId();
     }
 }

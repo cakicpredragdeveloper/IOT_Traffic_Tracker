@@ -23,17 +23,36 @@ namespace RabbitMQProvider.Receive
             _analyticCommandSender = analyticCommandSender;
         }
 
-        protected override void HandleMessage(string content)
+        protected override async void HandleMessage(string content)
         {
             throw new NotImplementedException();
 
             // TODO: Ovde dobijes jedan po jedan track
-            var track = JsonConvert.DeserializeObject<Track>(content);
-            Console.WriteLine(track);
+           var tracks = JsonConvert.DeserializeObject<List<Track>>(content);
 
+            foreach(var track in tracks)
+            {
+                AnaliticsResult analiticsResult = new AnaliticsResult()
+                {
+                    Id = await _trackRepository.GetNextAnaliticsResultId(),
+                    RecordId = track.RecordId
+                };
+
+                if (track.Speed > 20)
+                {
+                    if (track.BusCount > 2)
+                    {
+                        analiticsResult.Status = "dangeorous";
+                    }
+                    else analiticsResult.Status = "medium securely";
+                }
+                else analiticsResult.Status = "securely";
+
+                await _trackRepository.Create(analiticsResult);
+            }
 
             // TODO: Ovde saljes komande Command Servisu :)
-            _analyticCommandSender.Send(null);
+            //_analyticCommandSender.Send(null);
         }
     }
 }

@@ -60,6 +60,7 @@ namespace RabbitMQProvider.Receive
 
                 _channel.BasicAck(ea.DeliveryTag, false);
             };
+
             consumer.Shutdown += OnConsumerShutdown;
             consumer.Registered += OnConsumerRegistered;
             consumer.Unregistered += OnConsumerUnregistered;

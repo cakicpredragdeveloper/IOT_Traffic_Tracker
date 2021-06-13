@@ -106,6 +106,8 @@ namespace Sensor_Device_Service.Services
                                         //string result = await _httpService.PostRequest("http://data_service/data-service/tracks/array-of-tracks", setOfSignals);
                                         //_logger.LogInformation(result);
 
+                                        #region test slanje siddhi servisu
+
                                         // test slanje siddhi servisu
                                         AnalizatorInputModel inputTestModel = new AnalizatorInputModel()
                                         {
@@ -119,7 +121,7 @@ namespace Sensor_Device_Service.Services
                                             NamingStrategy = new CamelCaseNamingStrategy()
                                         };
 
-                                        //var json = JsonConvert.SerializeObject(inputTestModel);
+                                       // var json = JsonConvert.SerializeObject(inputTestModel);
 
                                         string json = JsonConvert.SerializeObject(inputTestModel, new JsonSerializerSettings
                                         {
@@ -134,6 +136,8 @@ namespace Sensor_Device_Service.Services
                                             new MediaTypeWithQualityHeaderValue("application/json"));
                                         var response = await client.PostAsync("http://192.168.1.58:8006/track-analizator", data);
                                         string result = response.Content.ReadAsStringAsync().Result;
+
+                                        #endregion
 
                                         counter = 0;
                                         dataFromSensor.Clear(); 

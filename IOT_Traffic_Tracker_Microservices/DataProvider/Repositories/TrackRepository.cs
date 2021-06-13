@@ -13,12 +13,14 @@ namespace DataProvider.Repositories
     public class TrackRepository: ITrackRepository
     {
         private readonly IMongoCollection<Track> _tracks;
+        private readonly IMongoCollection<AnaliticsResult> _analiticsResults;
         public TrackRepository(IMongoDbSettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
 
             _tracks = database.GetCollection<Track>(settings.TracksCollectionName);
+            _analiticsResults = database.GetCollection<AnaliticsResult>(settings.AnaliticsResultsCollectionName); 
         }
 
         public async Task<IEnumerable<Track>> GetAllTracks()
@@ -83,6 +85,16 @@ namespace DataProvider.Repositories
 
             return await _tracks.Find(filter)
                    .ToListAsync();
+        }
+
+        public async Task Create(AnaliticsResult analizatorResult)
+        {
+            await _analiticsResults.InsertOneAsync(analizatorResult);
+        }
+
+        public async Task<long> GetNextAnaliticsResultId()
+        {
+            return await _analiticsResults.CountDocumentsAsync(new BsonDocument()) + 1;
         }
     }
 }
