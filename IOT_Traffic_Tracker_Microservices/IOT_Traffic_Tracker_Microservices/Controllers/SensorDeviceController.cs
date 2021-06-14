@@ -15,7 +15,7 @@ namespace Sensor_Device_Service.Controllers
     {
         public SensorDeviceController()
         {
-
+           
         }
 
         //TODO: POST ruta za postavljanje time limit-a
@@ -72,11 +72,15 @@ namespace Sensor_Device_Service.Controllers
             return Ok(result);
         }
 
-        [HttpPost("analizator-result")]
-        public IActionResult AnalizatorResult([FromBody] AnalizatorResult analizatorResult)
+        [HttpPost("increment-ammount-of-data")]
+        public IActionResult InrementAmmountOfData(int number)
         {
-            int a = 10;
-            return Ok();
+            object lockObject = new object();
+            lock (lockObject)
+            {
+                DeviceParameters.AmmountOfData += number;
+            }
+            return Ok("Ammount of data updated successfully!");
         }
     }
 }

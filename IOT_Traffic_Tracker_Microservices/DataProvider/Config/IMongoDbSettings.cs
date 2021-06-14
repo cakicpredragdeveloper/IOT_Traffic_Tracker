@@ -7,7 +7,7 @@ namespace DataProvider.Config
     public interface IMongoDbSettings
     {
         string TracksCollectionName { get; set; }
-        string AnaliticsResultsCollectionName { get; set; }
+        string AnalyticsResultsCollectionName { get; set; }
         string ConnectionString { get; set; }
         string DatabaseName { get; set; }
     }

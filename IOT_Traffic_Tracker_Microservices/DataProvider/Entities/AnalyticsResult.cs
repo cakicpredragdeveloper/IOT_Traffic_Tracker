@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DataProvider.Entities
 {
-    public class AnaliticsResult
+    public class AnalyticsResult
     {
         public long Id { get; set; }
         public string RecordId { get; set; }

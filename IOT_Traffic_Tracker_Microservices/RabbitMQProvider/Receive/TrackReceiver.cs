@@ -6,53 +6,30 @@ using RabbitMQProvider.Send;
 using DataProvider.Repositories;
 using Newtonsoft.Json;
 using DataProvider.Entities;
+using SiddhiProvider.Services;
 
 namespace RabbitMQProvider.Receive
 {
     public class TrackReceiver : Receiver
     {
         private readonly IRabbitMQConfiguration _rabbitMQConfiguration;
-        private readonly ITrackRepository _trackRepository;
-        private readonly IAnalyticCommandSender _analyticCommandSender;
+        private readonly ISiddhiSender _siddhiSender;
 
-        public TrackReceiver(IRabbitMQConfiguration rabbitConf, ITrackRepository trackRepository, IAnalyticCommandSender analyticCommandSender)
+        public TrackReceiver(IRabbitMQConfiguration rabbitConf, ISiddhiSender siddhiSender)
                 : base(rabbitConf, rabbitConf.TracksQueueName)
         {
             _rabbitMQConfiguration = rabbitConf;
-            _trackRepository = trackRepository;
-            _analyticCommandSender = analyticCommandSender;
+            _siddhiSender = siddhiSender;
         }
 
         protected override async void HandleMessage(string content)
         {
-            throw new NotImplementedException();
-
-            // TODO: Ovde dobijes jedan po jedan track
-           var tracks = JsonConvert.DeserializeObject<List<Track>>(content);
+            var tracks = JsonConvert.DeserializeObject<List<Track>>(content);
 
             foreach(var track in tracks)
             {
-                AnaliticsResult analiticsResult = new AnaliticsResult()
-                {
-                    Id = await _trackRepository.GetNextAnaliticsResultId(),
-                    RecordId = track.RecordId
-                };
-
-                if (track.Speed > 20)
-                {
-                    if (track.BusCount > 2)
-                    {
-                        analiticsResult.Status = "dangeorous";
-                    }
-                    else analiticsResult.Status = "medium securely";
-                }
-                else analiticsResult.Status = "securely";
-
-                await _trackRepository.Create(analiticsResult);
+                string result = await _siddhiSender.SendData(track);
             }
-
-            // TODO: Ovde saljes komande Command Servisu :)
-            //_analyticCommandSender.Send(null);
         }
     }
 }

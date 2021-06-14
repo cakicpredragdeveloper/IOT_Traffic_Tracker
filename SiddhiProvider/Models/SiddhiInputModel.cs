@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace Sensor_Device_Service.Models
+namespace SiddhiProvider.Models
 {
-    public class AnalizatorInputModel
+    public class SiddhiInputModel
     {
         public int? Speed { get; set; }
         public int? BusCount { get; set; }

@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\SiddhiProvider\SiddhiProvider.csproj" />
     <ProjectReference Include="..\DataProvider\DataProvider.csproj" />
   </ItemGroup>
 

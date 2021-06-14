@@ -102,42 +102,9 @@ namespace Sensor_Device_Service.Services
                                         SetOfTracks setOfSignals = new SetOfTracks();
                                         setOfSignals.Tracks.AddRange(dataFromSensor);
 
-                                        //slanje podataka drugom mikroservisu
-                                        //string result = await _httpService.PostRequest("http://data_service/data-service/tracks/array-of-tracks", setOfSignals);
-                                        //_logger.LogInformation(result);
-
-                                        #region test slanje siddhi servisu
-
-                                        // test slanje siddhi servisu
-                                        AnalizatorInputModel inputTestModel = new AnalizatorInputModel()
-                                        {
-                                            Speed = setOfSignals.Tracks.First().Speed,
-                                            BusCount = setOfSignals.Tracks.First().BusCount,
-                                            RecordId = setOfSignals.Tracks.First().RecordId
-                                        };
-
-                                        DefaultContractResolver contractResolver = new DefaultContractResolver
-                                        {
-                                            NamingStrategy = new CamelCaseNamingStrategy()
-                                        };
-
-                                       // var json = JsonConvert.SerializeObject(inputTestModel);
-
-                                        string json = JsonConvert.SerializeObject(inputTestModel, new JsonSerializerSettings
-                                        {
-                                            ContractResolver = contractResolver,
-                                            Formatting = Formatting.Indented
-                                        });
-
-                                        var data = new StringContent(json, Encoding.UTF8, "application/json");
-
-                                        using var client = new HttpClient();
-                                        client.DefaultRequestHeaders.Accept.Add(
-                                            new MediaTypeWithQualityHeaderValue("application/json"));
-                                        var response = await client.PostAsync("http://192.168.1.58:8006/track-analizator", data);
-                                        string result = response.Content.ReadAsStringAsync().Result;
-
-                                        #endregion
+                                        //send data to Data_Service
+                                        string result = await _httpService.PostRequest("http://data_service/data-service/tracks/array-of-tracks", setOfSignals);
+                                        _logger.LogInformation(result);
 
                                         counter = 0;
                                         dataFromSensor.Clear(); 

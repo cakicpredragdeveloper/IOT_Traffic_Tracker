@@ -11,21 +11,22 @@
             (speed int, busCount int, recordId string);
         
 --HTTP sink to publish analizing result
---@sink(type='http', publisher.url='https://localhost:5003/sensor-device-service/analizator-result', 
-    --method='POST', 
-    --headers='Content-type:application/json',
-    --@map(type='json'))
-    --define stream TrackOutputStream(recordId string, status string);
+@sink(type='http', publisher.url='http://192.168.1.58:5002/analytics-service', 
+    method='POST', 
+    headers='Content-type:application/json',
+	basic.auth.enabled='false',
+    @map(type='json'))
+    define stream TrackOutputStream(RecordId string, Status string);
         
-@sink(type='log', prefix='LOGGER')
-    define stream TrackOutputStream(recordId string, status string);
-      
+--@sink(type='log', prefix='LOGGER')
+  --  define stream TrackOutputStream(recordId string, status string);
+  
 --Proccessing data from TrackInputStream
 @info(name = 'ComplexIfElseQuery')
     from TrackInputStream
-    select recordId, 
+    select recordId as RecordId, 
     ifThenElse(speed > 20, 
         ifThenElse(busCount > 2, 'Danger', 'Warning'), 
         'Normal')
-    as status
+    as Status
 insert into TrackOutputStream;

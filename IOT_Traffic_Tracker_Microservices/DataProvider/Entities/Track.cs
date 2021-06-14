@@ -9,7 +9,7 @@ namespace DataProvider.Entities
     public class Track
     {
         [BsonId]
-        public string InternalId { get; set; }
+        public ObjectId InternalId { get; set; }
         public long Id { get; set; }
         public DateTime Time { get; set; }
         public int? SegmentId { get; set; }
