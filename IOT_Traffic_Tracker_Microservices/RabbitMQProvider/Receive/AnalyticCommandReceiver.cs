@@ -20,7 +20,7 @@ namespace RabbitMQProvider.Receive
 
         protected override async void HandleMessage(string content)
         {
-           var command =  JsonConvert.DeserializeObject<ICommand>(content);
+           var command =  JsonConvert.DeserializeObject<Command>(content);
            await  command.Execute();
 
             //TODO: SignalR obrada...

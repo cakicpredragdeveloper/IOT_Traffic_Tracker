@@ -30,23 +30,21 @@ namespace AnalyticsService.Controllers
 
             analyticsResult.Id = await _repo.GetNextAnalyticsResultId();
             await _repo.Create(analyticsResult);
+
             Console.WriteLine(analyticsResult.Id + "  " + analyticsResult.RecordId + " " + analyticsResult.Status + "\n");
 
-            ICommand command;
+            //ICommand command;
 
-            if(analyticsResult.Status == "Danger")
-            {
-                command = new 
-                command.Code = Code.IncrementAmmountOfData;
-                command.Description = "Increment ammount of data for analyzation! Current traffic is dangerous!";
-            }
-            else
-            {
-                command.Code = Code.DecrementAmmountOfData;
-                command.Description = "Decrement ammount of data for analyzation! Traffic is normal!";
-            }
+            //if (analyticsResult.Status == "Danger")
+            //    command = new DangerModeOn();
+            //else command = new NormalModeOn();
 
-            _analyticCommandSender.Send(command);
+            Command command = null;
+            if (analyticsResult.Status == "Danger")
+                command = new Command(1);
+            else command = new Command(0);
+
+                _analyticCommandSender.Send(command);
 
             return Ok("Analytics result successfully saved to database");
         }
