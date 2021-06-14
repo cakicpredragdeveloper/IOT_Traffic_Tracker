@@ -11,7 +11,7 @@
             (speed int, busCount int, recordId string);
         
 --HTTP sink to publish analizing result
-@sink(type='http', publisher.url='http://192.168.1.58:5002/analytics-service', 
+@sink(type='http', publisher.url='http://192.168.1.58:5002/analytics-service/analytics-result', 
     method='POST', 
     headers='Content-type:application/json',
 	basic.auth.enabled='false',

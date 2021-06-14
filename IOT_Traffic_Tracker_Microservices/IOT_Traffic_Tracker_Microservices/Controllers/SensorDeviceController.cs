@@ -18,8 +18,6 @@ namespace Sensor_Device_Service.Controllers
            
         }
 
-        //TODO: POST ruta za postavljanje time limit-a
-
         [HttpPost("time-limit")]
         public IActionResult SetTimeLimit([FromBody] int newTimeLimit)
         {
@@ -27,10 +25,14 @@ namespace Sensor_Device_Service.Controllers
 
             lock (lockObject)
             {
-                DeviceParameters.TimeLimit = newTimeLimit;
+                if (newTimeLimit > 4 && newTimeLimit < 15)
+                {
+                    DeviceParameters.TimeLimit = newTimeLimit;
+                    return Ok("Time limit is set successfully");
+                }
+                else return BadRequest("Inalid parameter!");
             }
 
-            return Ok("Time limit is set successfully");
         }
 
         [HttpGet("time-limit")]
@@ -53,10 +55,14 @@ namespace Sensor_Device_Service.Controllers
 
             lock (lockObject)
             {
-                DeviceParameters.AmmountOfData = newAmmountOfData;
+                if (newAmmountOfData < 10 && newAmmountOfData > 0) 
+                {
+                    DeviceParameters.AmmountOfData = newAmmountOfData;
+                    return Ok("Ammount of data is set successfully");
+                }
+                else
+                    return BadRequest("Invalid parameter!");
             }
-
-            return Ok("Ammount of data is set successfully");
         }
 
         [HttpGet("ammount-of-data")]
@@ -72,15 +78,40 @@ namespace Sensor_Device_Service.Controllers
             return Ok(result);
         }
 
-        [HttpPost("increment-ammount-of-data")]
-        public IActionResult InrementAmmountOfData(int number)
+        [HttpGet("danger-mode-on")]
+        public IActionResult DangerModeOn()
         {
             object lockObject = new object();
             lock (lockObject)
             {
-                DeviceParameters.AmmountOfData += number;
+                if (DeviceParameters.AmmountOfData < 10)
+                    DeviceParameters.AmmountOfData++;
+
+                if (DeviceParameters.TimeLimit > 5)
+                    DeviceParameters.TimeLimit--;
             }
-            return Ok("Ammount of data updated successfully!");
+
+            Console.WriteLine("Danger mode is turned on!");
+
+            return Ok("Danger mode is turned on!");
+        }
+
+        [HttpGet("normal-mode-on")]
+        public IActionResult NormalModeOn()
+        {
+            object lockObject = new object();
+            lock (lockObject)
+            {
+                if (DeviceParameters.AmmountOfData > 1)
+                    DeviceParameters.AmmountOfData--;
+
+                if (DeviceParameters.TimeLimit < 15)
+                    DeviceParameters.TimeLimit++;
+            }
+
+            Console.WriteLine("Normal mode is turned on!");
+
+            return Ok("Normal mode is turned on!");
         }
     }
 }

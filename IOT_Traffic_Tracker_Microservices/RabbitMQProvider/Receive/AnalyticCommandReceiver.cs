@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
 using RabbitMQProvider.Config;
+using CommandProvider.Models;
+
 
 namespace RabbitMQProvider.Receive
 {
@@ -15,11 +18,12 @@ namespace RabbitMQProvider.Receive
             _rabbitMQConfiguration = rabbitConf;
         }
 
-        protected override void HandleMessage(string content)
+        protected override async void HandleMessage(string content)
         {
-            throw new NotImplementedException();
+           var command =  JsonConvert.DeserializeObject<ICommand>(content);
+           await  command.Execute();
 
-            // TODO ovde na osnovu komande saljes REST PUT / POST zahtev sa „komandom“ Device Microservisu
+            //TODO: SignalR obrada...
         }
     }
 }
