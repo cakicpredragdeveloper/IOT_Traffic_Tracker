@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnalyticsService", "Analyti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiddhiProvider", "..\SiddhiProvider\SiddhiProvider.csproj", "{D1DCD322-4C73-452B-ADF1-3B4F83A02555}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandProvider", "..\..\IOT Projekat\IOT_Traffic_Tracker\CommandProvider\CommandProvider.csproj", "{3A5D5B83-234B-4921-806C-63E9E119600F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandProvider", "..\..\IOT Projekat\IOT_Traffic_Tracker\CommandProvider\CommandProvider.csproj", "{3A5D5B83-234B-4921-806C-63E9E119600F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIGateway", "..\APIGateway\APIGateway.csproj", "{58D211E9-A9DD-4494-BD9D-14CD38320445}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{3A5D5B83-234B-4921-806C-63E9E119600F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A5D5B83-234B-4921-806C-63E9E119600F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A5D5B83-234B-4921-806C-63E9E119600F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58D211E9-A9DD-4494-BD9D-14CD38320445}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58D211E9-A9DD-4494-BD9D-14CD38320445}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58D211E9-A9DD-4494-BD9D-14CD38320445}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58D211E9-A9DD-4494-BD9D-14CD38320445}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
