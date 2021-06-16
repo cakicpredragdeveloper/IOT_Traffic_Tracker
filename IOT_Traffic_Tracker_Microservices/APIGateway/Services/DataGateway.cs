@@ -1,4 +1,5 @@
 ﻿using DataProvider.Entities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,40 +14,62 @@ namespace APIGateway.Services
     {
         public async Task DeleteTrack(int id)
         {
-            using var client = new HttpClient();
-            var response = await client.DeleteAsync("http://data_service/data-service/" + id.ToString());
+            using (var client = new HttpClient())
+            {
+                var response = await client.DeleteAsync("http://data_service/data-service/" + id.ToString());
+            }
         }
 
         public async Task<IEnumerable<Track>> GetAllTracks()
         {
-            using var client = new HttpClient();
-            var response = await client.GetAsync("http://data_service/data-service/tracks");
-
-            return (IEnumerable<Track>)await JsonSerializer.DeserializeAsync<IEnumerable<Task>>(await response.Content.ReadAsStreamAsync());
+            using (var client = new HttpClient())
+            {
+                using ( var response = await client.GetAsync("http://data_service/data-service/tracks"))
+                {
+                    string stringResponse = await response.Content.ReadAsStringAsync();
+                    return  JsonConvert.DeserializeObject<IEnumerable<Track>>(stringResponse);
+                }
+            }
         }
 
         public async Task<IEnumerable<Track>> GetTracks(int maxSpeed)
         {
-            using var client = new HttpClient();
-            var response = await client.GetAsync("http://data_service/data-service/tracks/max-speed/" + maxSpeed.ToString());
-            return (IEnumerable<Track>)await JsonSerializer.DeserializeAsync<IEnumerable<Task>>(await response.Content.ReadAsStreamAsync());
+            using (var client = new HttpClient())
+            {
+                using (var response = await client.GetAsync("http://data_service/data-service/tracks/max-speed/" + maxSpeed.ToString()))
+                {
+                    string stringResponse = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<IEnumerable<Track>>(stringResponse);
+                }
+            }
         }
 
         public async Task<IEnumerable<Track>> GetTracksAirDistanceCondition(int airDistance)
         {
-            using var client = new HttpClient();
-            var response = await client.GetAsync("http://data_service/data-service/tracks/air-distance/" + airDistance.ToString());
-            return (IEnumerable<Track>)await JsonSerializer.DeserializeAsync<IEnumerable<Task>>(await response.Content.ReadAsStreamAsync());
+            using (var client = new HttpClient())
+            {
+                using (var response = await client.GetAsync("http://data_service/data-service/tracks/air-distance/" + airDistance.ToString()))
+                {
+                    string stringResponse = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<IEnumerable<Track>>(stringResponse);
+                }
+            }
         }
 
         public async Task<Track> UpdateTrack(int id, Track track)
         {
-            var json = JsonSerializer.Serialize(track);
+
+            var json = JsonConvert.SerializeObject(track);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
-            using var client = new HttpClient();
-            var response = await client.PutAsync("http://data_service/data-service/tracks/" + id.ToString(), data);
-            return (Track)await JsonSerializer.DeserializeAsync<IEnumerable<Task>>(await response.Content.ReadAsStreamAsync());
+            using (var client = new HttpClient())
+            {
+                using (var response = await client.PutAsync("http://data_service/data-service/tracks/" + id.ToString(), data))
+                {
+                    string stringResponse = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<Track>(stringResponse);
+                }
+            }
         }
     }
 }

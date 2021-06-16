@@ -21,9 +21,9 @@ namespace APIGateway.Controllers
         }
 
         [HttpGet]
-        public async HttpResponseMessage Get()
+        public async Task<IActionResult> Get()
         {
-            return await _service.GetAllTracks();
+            var result =  await _service.GetAllTracks();
             return Ok(result);
         }
 
