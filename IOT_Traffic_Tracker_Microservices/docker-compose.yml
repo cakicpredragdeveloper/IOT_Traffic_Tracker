@@ -74,3 +74,10 @@ services:
         image: rabbitmq:3-management
 
 
+
+  apigateway:
+    image: ${DOCKER_REGISTRY-}apigateway
+    build:
+      context: .
+      dockerfile: APIGateway/Dockerfile
+
