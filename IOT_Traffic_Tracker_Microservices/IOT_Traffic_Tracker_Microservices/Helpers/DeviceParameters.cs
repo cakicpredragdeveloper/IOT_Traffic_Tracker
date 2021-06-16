@@ -7,8 +7,8 @@ namespace Sensor_Device_Service.Helpers
 {
     public static class DeviceParameters
     {
-        public static int TimeLimit { get; set; } = 50;
-        public static int AmmountOfData { get; set; } = 1;
+        public static int TimeLimit { get; set; } = 20;
+        public static int AmmountOfData { get; set; } = 2;
 
         public static List<string> SignalProperties { get; set; }
             = new List<string>()
