@@ -7,7 +7,8 @@ using Microsoft.OpenApi.Models;
 using RabbitMQProvider.Config;
 using RabbitMQProvider.Receive;
 using Microsoft.Extensions.Options;
-
+using DataProvider.Config;
+using DataProvider.Repositories;
 
 namespace CommandService
 {
@@ -30,7 +31,12 @@ namespace CommandService
 
             services.AddHostedService<AnalyticCommandReceiver>();
 
-           
+            services.Configure<MongoDbSettings>(Configuration.GetSection(nameof(MongoDbSettings)));
+
+            services.AddSingleton<IMongoDbSettings>(sp =>
+                sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
+
+            services.AddSingleton<ICommandRepository, CommandRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
