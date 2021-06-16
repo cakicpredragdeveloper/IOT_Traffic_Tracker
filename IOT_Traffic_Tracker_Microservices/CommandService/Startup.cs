@@ -30,6 +30,8 @@ namespace CommandService
 
             services.AddHostedService<AnalyticCommandReceiver>();
 
+           
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

@@ -21,6 +21,7 @@ namespace APIGateway.Services
         {
             using var client = new HttpClient();
             var response = await client.GetAsync("http://data_service/data-service/tracks");
+
             return (IEnumerable<Track>)await JsonSerializer.DeserializeAsync<IEnumerable<Task>>(await response.Content.ReadAsStreamAsync());
         }
 

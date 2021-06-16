@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataProvider.Entities;
 using APIGateway.Services;
+using System.Net.Http;
 
 namespace APIGateway.Controllers
 {
@@ -20,9 +21,9 @@ namespace APIGateway.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Track>>> Get()
+        public async HttpResponseMessage Get()
         {
-            var result = await _service.GetAllTracks();
+            return await _service.GetAllTracks();
             return Ok(result);
         }
 
@@ -36,7 +37,7 @@ namespace APIGateway.Controllers
         //    return new ObjectResult(track);
         //}
 
-        [HttpPut("{id}")]
+        [HttpPut("tracks/{id}")]
         public async Task<ActionResult<Track>> Put(int id, [FromBody] Track track)
         {
             var result = await _service.UpdateTrack(id, track);
