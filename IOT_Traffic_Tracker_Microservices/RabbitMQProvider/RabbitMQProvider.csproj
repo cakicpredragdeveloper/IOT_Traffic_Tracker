@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\IOT Projekat\IOT_Traffic_Tracker\CommandProvider\CommandProvider.csproj" />
     <ProjectReference Include="..\..\SiddhiProvider\SiddhiProvider.csproj" />
+    <ProjectReference Include="..\CommandProvider\CommandProvider.csproj" />
     <ProjectReference Include="..\DataProvider\DataProvider.csproj" />
   </ItemGroup>
 
