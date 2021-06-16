@@ -1,12 +1,12 @@
-C:\Users\cakic\Desktop\IOT_Traffic_Tracker\SiddhiProvider\obj\Debug\netstandard2.0\SiddhiProvider.csprojAssemblyReference.cache
-C:\Users\cakic\Desktop\IOT_Traffic_Tracker\SiddhiProvider\obj\Debug\netstandard2.0\SiddhiProvider.AssemblyInfoInputs.cache
-C:\Users\cakic\Desktop\IOT_Traffic_Tracker\SiddhiProvider\obj\Debug\netstandard2.0\SiddhiProvider.AssemblyInfo.cs
-C:\Users\cakic\Desktop\IOT_Traffic_Tracker\SiddhiProvider\obj\Debug\netstandard2.0\SiddhiProvider.csproj.CoreCompileInputs.cache
 C:\Users\cakic\Desktop\IOT_Traffic_Tracker\SiddhiProvider\bin\Debug\netstandard2.0\SiddhiProvider.deps.json
 C:\Users\cakic\Desktop\IOT_Traffic_Tracker\SiddhiProvider\bin\Debug\netstandard2.0\SiddhiProvider.dll
 C:\Users\cakic\Desktop\IOT_Traffic_Tracker\SiddhiProvider\bin\Debug\netstandard2.0\SiddhiProvider.pdb
 C:\Users\cakic\Desktop\IOT_Traffic_Tracker\SiddhiProvider\bin\Debug\netstandard2.0\DataProvider.dll
 C:\Users\cakic\Desktop\IOT_Traffic_Tracker\SiddhiProvider\bin\Debug\netstandard2.0\DataProvider.pdb
+C:\Users\cakic\Desktop\IOT_Traffic_Tracker\SiddhiProvider\obj\Debug\netstandard2.0\SiddhiProvider.csprojAssemblyReference.cache
+C:\Users\cakic\Desktop\IOT_Traffic_Tracker\SiddhiProvider\obj\Debug\netstandard2.0\SiddhiProvider.AssemblyInfoInputs.cache
+C:\Users\cakic\Desktop\IOT_Traffic_Tracker\SiddhiProvider\obj\Debug\netstandard2.0\SiddhiProvider.AssemblyInfo.cs
+C:\Users\cakic\Desktop\IOT_Traffic_Tracker\SiddhiProvider\obj\Debug\netstandard2.0\SiddhiProvider.csproj.CoreCompileInputs.cache
 C:\Users\cakic\Desktop\IOT_Traffic_Tracker\SiddhiProvider\obj\Debug\netstandard2.0\SiddhiProvider.csproj.CopyComplete
 C:\Users\cakic\Desktop\IOT_Traffic_Tracker\SiddhiProvider\obj\Debug\netstandard2.0\SiddhiProvider.dll
 C:\Users\cakic\Desktop\IOT_Traffic_Tracker\SiddhiProvider\obj\Debug\netstandard2.0\SiddhiProvider.pdb

@@ -33,12 +33,6 @@ namespace AnalyticsService.Controllers
 
             Console.WriteLine(analyticsResult.Id + "  " + analyticsResult.RecordId + " " + analyticsResult.Status + "\n");
 
-            //ICommand command;
-
-            //if (analyticsResult.Status == "Danger")
-            //    command = new DangerModeOn();
-            //else command = new NormalModeOn();
-
             Command command = null;
             if (analyticsResult.Status == "Danger")
                 command = new Command(1);
