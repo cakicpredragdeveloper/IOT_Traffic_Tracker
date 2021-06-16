@@ -10,6 +10,7 @@ using DataProvider.Config;
 using DataProvider.Repositories;
 using RabbitMQProvider.Receive;
 using RabbitMQProvider.Send;
+using SiddhiProvider.Services;
 
 namespace AnalyticsService
 {
@@ -38,7 +39,7 @@ namespace AnalyticsService
 
             services.AddHostedService<TrackReceiver>();
             services.AddSingleton<IAnalyticCommandSender, AnalyticCommandSender>();
-
+            services.AddSingleton<ISiddhiSender, SiddhiSender>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

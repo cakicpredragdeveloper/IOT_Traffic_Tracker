@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using SiddhiProvider.Models;
 using RabbitMQProvider.Send;
+using CommandProvider.Models;
 
 namespace AnalyticsService.Controllers
 {
@@ -16,13 +17,13 @@ namespace AnalyticsService.Controllers
         private readonly ITrackRepository _repo;
         private readonly IAnalyticCommandSender _analyticCommandSender;
 
-        public AnalyticsController(TrackRepository trackRepository, IAnalyticCommandSender analyticCommandSender)
+        public AnalyticsController(ITrackRepository trackRepository,  IAnalyticCommandSender analyticCommandSender)
         {
             _repo = trackRepository;
             _analyticCommandSender = analyticCommandSender;
         }
 
-        [HttpPost()]
+        [HttpPost("analytics-result")]
         public async Task<ActionResult> CreateAnalyticsResult([FromBody] SiddhiOutputModel siddhiOutput)
         {
             var analyticsResult = siddhiOutput.Event;
@@ -30,7 +31,20 @@ namespace AnalyticsService.Controllers
             analyticsResult.Id = await _repo.GetNextAnalyticsResultId();
             await _repo.Create(analyticsResult);
 
-            //_analyticCommandSender.Send(null);
+            Console.WriteLine(analyticsResult.Id + "  " + analyticsResult.RecordId + " " + analyticsResult.Status + "\n");
+
+            //ICommand command;
+
+            //if (analyticsResult.Status == "Danger")
+            //    command = new DangerModeOn();
+            //else command = new NormalModeOn();
+
+            Command command = null;
+            if (analyticsResult.Status == "Danger")
+                command = new Command(1);
+            else command = new Command(0);
+
+                _analyticCommandSender.Send(command);
 
             return Ok("Analytics result successfully saved to database");
         }

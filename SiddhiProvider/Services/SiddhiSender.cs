@@ -11,7 +11,7 @@ using System.Net.Http.Headers;
 
 namespace SiddhiProvider.Services
 {
-    public class SiddhiSenderc : ISiddhiSender
+    public class SiddhiSender : ISiddhiSender
     {
         public async Task<string> SendData(Track track)
         {

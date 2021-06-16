@@ -58,7 +58,6 @@ namespace Data_Service.Controllers
             if (trackFromDb == null)
                 return new NotFoundResult();
             track.Id = trackFromDb.Id;
-            track.InternalId = trackFromDb.InternalId;
             await _repo.Update(track);
             return new OkObjectResult(track);
         }

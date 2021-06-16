@@ -15,7 +15,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\IOT Projekat\IOT_Traffic_Tracker\CommandProvider\CommandProvider.csproj" />
+    <ProjectReference Include="..\DataProvider\DataProvider.csproj" />
     <ProjectReference Include="..\RabbitMQProvider\RabbitMQProvider.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>
