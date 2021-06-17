@@ -25,6 +25,7 @@ namespace APIGateway.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
+
             var result =  await _dataService.GetAllTracks();
             return Ok(result);
         }
@@ -32,7 +33,7 @@ namespace APIGateway.Controllers
         //[HttpGet("{id}")]
         //public async Task<ActionResult<Track>> Get(int id)
         //{
-        //    var track = await _service.GetTrack(id);
+        //    var track = await _dataService.GetTrack(id);
         //    if (track == null)
         //        return new NotFoundResult();
 

@@ -9,6 +9,7 @@ using RabbitMQProvider.Receive;
 using Microsoft.Extensions.Options;
 using DataProvider.Config;
 using DataProvider.Repositories;
+using SignalRProvider.HubConfig;
 
 namespace CommandService
 {
@@ -38,7 +39,20 @@ namespace CommandService
 
             services.AddSingleton<ICommandRepository, CommandRepository>();
 
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder => builder
+                .WithOrigins("http://localhost:4200") // the Angular app url
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+            });
+
             services.AddControllers();
+
+            services.AddSignalR();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CommandService", Version = "v1" });
@@ -59,11 +73,14 @@ namespace CommandService
 
             app.UseRouting();
 
+            app.UseCors("CorsPolicy");
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<CommandHub>("/signalR");
             });
         }
     }

@@ -1,35 +1,46 @@
 import { Injectable } from '@angular/core';
-import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
-import {BaseApiService} from './base-api.service';
+import * as signalR from '@microsoft/signalr';
+import {BehaviorSubject} from 'rxjs';
+import {Command} from '../models/command';
+import {ToastrService} from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SignalRService extends BaseApiService {
+export class SignalRService {
+  connection: signalR.HubConnection;
+  hubHelloMessage: BehaviorSubject<Command>;
 
-  public hubConnection: HubConnection;
+  constructor() {
 
-  // constructor() {
-    // super();
-    //
-    // this.startConnection();
-  // }
-
-  public startConnection = () => {
-    this.hubConnection = new HubConnectionBuilder()
-      .withUrl(this.apiUrl + '/commands-h')
-      .build();
-
-    this.hubConnection
-      .start()
-      .then(() => console.log('Connection started'))
-      .catch(err => console.log('Error while starting connection: ' + err));
+    this.hubHelloMessage = new BehaviorSubject<Command>(null);
   }
 
-  public addCommandsListener = () => {
-    this.hubConnection.on('commands', (data) => {
-      // Do some work here
-      console.log(data);
+  public initiateSignalrConnection(): Promise<any>{
+    return new Promise((resolve, reject) => {
+      this.connection = new signalR.HubConnectionBuilder()
+        .withUrl('http://localhost:5001/signalR') // the SignalR server url, in the .NET Project properties
+        .build();
+
+      this.setSignalrClientMethods();
+
+      this.connection
+        .start()
+        .then(() => {
+          console.log(`SignalR connection success! connectionId: ${this.connection.connectionId} `);
+          resolve();
+        })
+        .catch((error) => {
+          console.log(`SignalR connection error: ${error}`);
+          reject();
+        });
+    });
+  }
+
+  private setSignalrClientMethods(): void {
+    this.connection.on('commands', (message: Command) => {
+      console.log(message);
+      this.hubHelloMessage.next(message);
     });
   }
 }

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using SiddhiProvider.Models;
 using RabbitMQProvider.Send;
 using CommandProvider.Models;
+//using Microsoft.AspNetCore.SignalR;
+using SignalRProvider.HubConfig;
 
 namespace AnalyticsService.Controllers
 {
@@ -16,11 +18,13 @@ namespace AnalyticsService.Controllers
     {
         private readonly ITrackRepository _repo;
         private readonly IAnalyticCommandSender _analyticCommandSender;
+        //private readonly IHubConfig<CommandHub> _hub;
 
-        public AnalyticsController(ITrackRepository trackRepository,  IAnalyticCommandSender analyticCommandSender)
+        public AnalyticsController(ITrackRepository trackRepository,  IAnalyticCommandSender analyticCommandSender/*, IHubConfig<CommandHub> hub*/)
         {
             _repo = trackRepository;
             _analyticCommandSender = analyticCommandSender;
+            //_hub = hub;
         }
 
         [HttpPost("analytics-result")]
@@ -41,6 +45,8 @@ namespace AnalyticsService.Controllers
             command.DateTime = DateTime.Now;
             command.RecordId = analyticsResult.RecordId;
             command.Status = analyticsResult.Status;
+
+            //_ = _hub.Clients.Group("CommandRoom").SendAsync("commands", command);
 
             _analyticCommandSender.Send(command);
 

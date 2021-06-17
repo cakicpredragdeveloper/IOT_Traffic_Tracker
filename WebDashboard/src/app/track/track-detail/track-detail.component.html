@@ -1,1 +1,29 @@
-<p>track-detail works!</p>
+<h2>Track details</h2>
+
+
+<ng-container *ngIf="track">
+  <p>time: {{ track.time }}</p>
+  <p>segmentId: {{ track.segmentId }}</p>
+  <p>speed: {{ track.speed }}</p>
+  <p>street: {{ track.street }}</p>
+  <p>direction: {{ track.direction }}</p>
+  <p>fromStreet: {{ track.fromStreet }}</p>
+  <p>toStreet: {{ track.toStreet }}</p>
+  <p>length: {{ track.length }}</p>
+  <p>streetHeading: {{ track.streetHeading }}</p>
+  <p>comments: {{ track.comments }}</p>
+  <p>busCount: {{ track.busCount }}</p>
+  <p>messageCount: {{ track.messageCount }}</p>
+  <p>hour: {{ track.hour }}</p>
+  <p>dayOfWeek: {{ track.dayOfWeek }}</p>
+  <p>month: {{ track.month }}</p>
+  <p>recordId: {{ track.recordId }}</p>
+  <p>startLat: {{ track.startLat }}</p>
+  <p>startLng: {{ track.startLng }}</p>
+  <p>endLat: {{ track.endLat }}</p>
+  <p>endLng: {{ track.endLng }}</p>
+  <p>communityAreas: {{ track.communityAreas }}</p>
+  <p>zipCodes: {{ track.zipCodes }}</p>
+  <p>wards: {{ track.wards }}</p>
+  <p>airDistance: {{ track.airDistance }}</p>
+</ng-container>

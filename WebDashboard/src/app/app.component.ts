@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {SignalRService} from './_shared/services/signal-r.service';
-import {HttpClient} from '@angular/common/http';
+import {Command} from './_shared/models/command';
+import {ToastrService} from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-root',
@@ -10,20 +12,27 @@ import {HttpClient} from '@angular/common/http';
 export class AppComponent implements OnInit {
   title = 'WebDashboard';
 
-  constructor(private signalRService: SignalRService,
-              private http: HttpClient) {
+  hubHelloMessage: Command;
+
+  constructor(public signalrService: SignalRService,
+              public toastrService: ToastrService) {
   }
 
   ngOnInit(): void {
-    // this.signalRService.startConnection();
-    // this.signalRService.addCommandsListener();
-    // this.startHttpRequest();
+    this.signalrService.hubHelloMessage.subscribe((hubHelloMessage: Command) => {
+      this.hubHelloMessage = hubHelloMessage;
+      if (this.hubHelloMessage) {
+        this.toastrService.success(hubHelloMessage.description, 'Command');
+      }
+    });
+
+    this.signalrService.connection
+      .invoke('Hello')
+      .catch(error => {
+          console.log(`SignalrDemoHub.Hello() error: ${error}`);
+          alert('SignalrDemoHub.Hello() error!, see console for details.');
+        }
+      );
   }
 
-  private startHttpRequest = () => {
-    this.http.get(  'http://localhost:5001/commands-h')
-      .subscribe(res => {
-        console.log(res);
-      });
-  }
 }

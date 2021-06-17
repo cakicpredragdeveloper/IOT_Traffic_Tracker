@@ -13,6 +13,10 @@ const routes: Routes = [
     loadChildren: () => import('./track/track.module').then(m => m.TrackModule)
   },
   {
+    path: 'commands',
+    loadChildren: () => import('./command/command.module').then(m => m.CommandModule)
+  },
+  {
     path: '**',
     redirectTo: 'welcome'
   }
