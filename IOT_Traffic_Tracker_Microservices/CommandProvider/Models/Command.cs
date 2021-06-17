@@ -8,8 +8,13 @@ namespace CommandProvider.Models
 {
     public class Command
     {
+        public long Id { get; set; }
         public string Description { get; set; }
         public int Code { get; set; }
+        public DateTime DateTime { get; set; }
+
+        public string RecordId { get; set; }
+        public string Status { get; set; }
 
         public Command(int code)
         {

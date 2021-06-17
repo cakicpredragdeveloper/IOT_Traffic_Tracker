@@ -194,10 +194,21 @@
           }
         }
       },
+      "CommandProvider/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/CommandProvider.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CommandProvider.dll": {}
+        }
+      },
       "DataProvider/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "CommandProvider": "1.0.0",
           "MongoDB.Driver": "2.12.3"
         },
         "compile": {
@@ -634,6 +645,11 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "CommandProvider/1.0.0": {
+      "type": "project",
+      "path": "../IOT_Traffic_Tracker_Microservices/CommandProvider/CommandProvider.csproj",
+      "msbuildProject": "../IOT_Traffic_Tracker_Microservices/CommandProvider/CommandProvider.csproj"
     },
     "DataProvider/1.0.0": {
       "type": "project",

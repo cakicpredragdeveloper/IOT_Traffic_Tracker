@@ -127,8 +127,14 @@
           }
         }
       },
+      "CommandProvider/1.0.0": {
+        "runtime": {
+          "CommandProvider.dll": {}
+        }
+      },
       "DataProvider/1.0.0": {
         "dependencies": {
+          "CommandProvider": "1.0.0",
           "MongoDB.Driver": "2.12.3"
         },
         "runtime": {
@@ -226,6 +232,11 @@
       "sha512": "sha512-4J2JQXbftjPMppIHJ7IC+VXQ9XfEagN92vZZNoG12i+zReYlim5dMoXFC1Zzg7tsnKDM7JPo5bYfFK4Jheq44w==",
       "path": "system.text.encoding.codepages/4.5.1",
       "hashPath": "system.text.encoding.codepages.4.5.1.nupkg.sha512"
+    },
+    "CommandProvider/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "DataProvider/1.0.0": {
       "type": "project",

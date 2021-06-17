@@ -38,7 +38,11 @@ namespace AnalyticsService.Controllers
                 command = new Command(1);
             else command = new Command(0);
 
-                _analyticCommandSender.Send(command);
+            command.DateTime = DateTime.Now;
+            command.RecordId = analyticsResult.RecordId;
+            command.Status = analyticsResult.Status;
+
+            _analyticCommandSender.Send(command);
 
             return Ok("Analytics result successfully saved to database");
         }

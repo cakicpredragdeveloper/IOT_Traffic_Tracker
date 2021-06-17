@@ -28,6 +28,7 @@ namespace APIGateway
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IDataGateway, DataGateway>();
+            services.AddSingleton<ICommandGateway, CommandGateway>();
 
             services.AddControllers();
 
