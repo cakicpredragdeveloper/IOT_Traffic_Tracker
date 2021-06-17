@@ -14,6 +14,6 @@ export class TrackService extends BaseApiService {
   }
 
   public getTrack(trackId: string): Observable<Track> {
-    return this.http.get<Track>(`${this.apiUrl}/tracks/${trackId}`);
+    return this.http.get<Track>(`${this.apiUrl}/api/tracks/${trackId}`);
   }
 }

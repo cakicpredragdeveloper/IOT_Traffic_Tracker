@@ -13,5 +13,6 @@ namespace APIGateway.Services
         Task DeleteTrack(int id);
         Task<IEnumerable<Track>> GetTracks(int maxSpeed);
         Task<IEnumerable<Track>> GetTracksAirDistanceCondition(int airDistance);
+        Task<Track> GetTrack(int id);
     }
 }

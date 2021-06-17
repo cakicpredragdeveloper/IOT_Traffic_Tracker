@@ -32,6 +32,18 @@ namespace APIGateway.Services
             }
         }
 
+        public async Task<Track> GetTrack(int id)
+        {
+            using (var client = new HttpClient())
+            {
+                using (var response = await client.GetAsync("http://data_service/data-service/tracks/" + id.ToString()))
+                {
+                    string stringResponse = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<Track>(stringResponse);
+                }
+            }
+        }
+
         public async Task<IEnumerable<Track>> GetTracks(int maxSpeed)
         {
             using (var client = new HttpClient())

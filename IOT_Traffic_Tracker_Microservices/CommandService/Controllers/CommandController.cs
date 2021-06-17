@@ -8,7 +8,7 @@ using DataProvider.Repositories;
 namespace CommandService.Controllers
 {
     [ApiController]
-    [Route("commnand")]
+    [Route("command")]
     public class CommandController : Controller
     {
         private readonly ICommandRepository _commandRepository;

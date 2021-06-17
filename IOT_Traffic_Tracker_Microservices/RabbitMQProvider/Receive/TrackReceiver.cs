@@ -29,7 +29,7 @@ namespace RabbitMQProvider.Receive
             foreach(var track in tracks)
             {
                 // TODO Uncomment me
-                // string result = await _siddhiSender.SendData(track);
+                string result = await _siddhiSender.SendData(track);
             }
         }
     }

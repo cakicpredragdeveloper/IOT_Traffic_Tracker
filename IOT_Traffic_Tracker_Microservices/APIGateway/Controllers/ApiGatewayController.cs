@@ -30,15 +30,15 @@ namespace APIGateway.Controllers
             return Ok(result);
         }
 
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Track>> Get(int id)
-        //{
-        //    var track = await _dataService.GetTrack(id);
-        //    if (track == null)
-        //        return new NotFoundResult();
+        [HttpGet("tracks/{id}")]
+        public async Task<ActionResult<Track>> Get(int id)
+        {
+            var track = await _dataService.GetTrack(id);
+            if (track == null)
+                return new NotFoundResult();
 
-        //    return new ObjectResult(track);
-        //}
+            return new ObjectResult(track);
+        }
 
         [HttpPut("tracks/{id}")]
         public async Task<ActionResult<Track>> Put(int id, [FromBody] Track track)

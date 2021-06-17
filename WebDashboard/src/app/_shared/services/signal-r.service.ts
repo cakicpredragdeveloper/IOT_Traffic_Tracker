@@ -13,7 +13,7 @@ export class SignalRService {
 
   constructor() {
 
-    this.hubHelloMessage = new BehaviorSubject<Command>(null);
+    this.hubHelloMessage = new BehaviorSubject<Command>(new Command());
   }
 
   public initiateSignalrConnection(): Promise<any>{
