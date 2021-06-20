@@ -27,11 +27,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\app-routing.module.ts" />
     <None Remove="ClientApp\src\app\command\command-list\command-list.component.ts" />
     <None Remove="ClientApp\src\app\command\command-routing.module.ts" />
     <None Remove="ClientApp\src\app\command\command.module.ts" />
     <None Remove="ClientApp\src\app\command\command.service.ts" />
-    <None Remove="ClientApp\src\app\track\track-detail\track-detail.cpomponent.ts" />
+    <None Remove="ClientApp\src\app\track\track-detail\track-detail.component.ts" />
     <None Remove="ClientApp\src\app\track\track-list\track-list.component.ts" />
     <None Remove="ClientApp\src\app\track\track-routing.module.ts" />
     <None Remove="ClientApp\src\app\track\track.module.ts" />
@@ -46,11 +47,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\command\command-list\command-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\command\command-routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\command\command.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\command\command.service.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\track\track-detail\track-detail.cpomponent.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\track\track-detail\track-detail.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\track\track-list\track-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\track\track-routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\track\track.module.ts" />

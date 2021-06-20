@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { TrackListComponent } from './track-list/track-list.component';
-import { TrackDetailComponent } from './track-detail/track-detail.component';
+import { TrackDetailComponent } from '../track/track-detail/track-detail.component';
 
 
 
