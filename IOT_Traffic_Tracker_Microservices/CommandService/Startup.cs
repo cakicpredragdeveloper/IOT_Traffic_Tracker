@@ -39,14 +39,15 @@ namespace CommandService
 
             services.AddSingleton<ICommandRepository, CommandRepository>();
 
-
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy", builder => builder
-                .WithOrigins("http://localhost:4200") // the Angular app url
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials());
+                options.AddPolicy("CORS", builder =>
+                {
+                    builder.AllowAnyHeader()
+                   .AllowAnyMethod()
+                   .SetIsOriginAllowed((host) => true)
+                   .AllowCredentials();
+                });
             });
 
             services.AddControllers();
@@ -73,7 +74,7 @@ namespace CommandService
 
             app.UseRouting();
 
-            app.UseCors("CorsPolicy");
+            app.UseCors("CORS");
 
             app.UseAuthorization();
 

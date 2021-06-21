@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandProvider", "CommandP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SignalRProvider", "SignalRProvider\SignalRProvider.csproj", "{C72EE2E1-B555-45EE-B114-D15456410B9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDashboard", "WebDashboard\WebDashboard.csproj", "{726A16D4-072E-45C0-B7E2-4C4C9542B4DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDashb", "WebDashb\WebDashb.csproj", "{65CE6E46-86FC-4885-BA2A-5EDD05B4A0BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,10 +77,10 @@ Global
 		{C72EE2E1-B555-45EE-B114-D15456410B9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C72EE2E1-B555-45EE-B114-D15456410B9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C72EE2E1-B555-45EE-B114-D15456410B9E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{726A16D4-072E-45C0-B7E2-4C4C9542B4DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{726A16D4-072E-45C0-B7E2-4C4C9542B4DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{726A16D4-072E-45C0-B7E2-4C4C9542B4DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{726A16D4-072E-45C0-B7E2-4C4C9542B4DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65CE6E46-86FC-4885-BA2A-5EDD05B4A0BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65CE6E46-86FC-4885-BA2A-5EDD05B4A0BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65CE6E46-86FC-4885-BA2A-5EDD05B4A0BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65CE6E46-86FC-4885-BA2A-5EDD05B4A0BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

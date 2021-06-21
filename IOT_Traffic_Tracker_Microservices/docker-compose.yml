@@ -81,5 +81,15 @@ services:
             - RABBITMQ_DEFAULT_PASS=password        
         image: rabbitmq:3-management
 
-
+    webdashb:
+        container_name: wd
+        image: ${DOCKER_REGISTRY-}webdashb
+        build:
+            context: .
+            dockerfile: WebDashb\Dockerfile
+        ports:
+            - 4200:80
+        depends_on: 
+            - commandservice
+            - apigateway
 

@@ -32,3 +32,9 @@ services:
     ports:
       - "80"
       
+  webdashb:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+
